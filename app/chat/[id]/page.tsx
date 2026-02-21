@@ -216,9 +216,6 @@ export default function ChatPage({ params }: { params: Promise<{ id: string }> }
                             <Send size={18} />
                         </button>
                     </div>
-                    <p className="mt-3 text-[10px] text-zinc-600 text-center uppercase tracking-widest font-bold">
-                        Powered by RAG • Grounded in Official Documents
-                    </p>
                 </div>
             </footer>
         </div>

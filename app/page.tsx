@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { clsx, type ClassValue } from "clsx";
 import { motion } from "framer-motion";
 import {
@@ -22,14 +21,6 @@ const parties = [
 ];
 
 export default function Home() {
-  const [selectedParties, setSelectedParties] = useState<string[]>([]);
-
-  const toggleParty = (id: string) => {
-    setSelectedParties((prev) =>
-      prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id]
-    );
-  };
-
   return (
     <main className="relative min-h-screen w-full flex flex-col items-center justify-center bg-black text-white overflow-hidden selection:bg-purple-500/30">
       <div className="relative z-10 w-full max-w-4xl px-6 py-12 flex flex-col items-center">
@@ -126,11 +117,11 @@ export default function Home() {
           <p className="text-zinc-600 font-medium">
             Developed for a more informed democracy by <span className="font-bold text-white/60 underline"><Link href="https://subigyasubedi.com.np" className="hover:text-white transition-colors" target="_blank">subedi.js</Link></span>
           </p>
-          <div className="flex flex-col items-center gap-2">
+          {/* <div className="flex flex-col items-center gap-2">
             <p className="text-zinc-700 font-medium">
               This is an open-source project. We welcome your contributions on <Link href="https://github.com/subigya-js/manifesto-gpt" className="hover:text-white transition-colors text-white/85 underline font-semibold" target="_blank">GitHub</Link>
             </p>
-          </div>
+          </div> */}
         </motion.div>
       </div>
     </main>
