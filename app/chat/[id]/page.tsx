@@ -12,6 +12,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { use, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -48,7 +50,7 @@ export default function ChatPage({ params }: { params: Promise<{ id: string }> }
     ]);
     const [isTyping, setIsTyping] = useState(false);
 
-    const handleSend = () => {
+    const handleSend = async () => {
         if (!input.trim()) return;
 
         const userMessage: Message = {
@@ -61,16 +63,61 @@ export default function ChatPage({ params }: { params: Promise<{ id: string }> }
         setInput("");
         setIsTyping(true);
 
-        // Simulate AI response
-        setTimeout(() => {
+        try {
+            const response = await fetch("/api/chat", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    messages: [...messages, userMessage].map(m => ({
+                        role: m.role,
+                        content: m.content
+                    })),
+                    partyId: id
+                })
+            });
+
+            if (!response.ok) throw new Error("Failed to fetch");
+
+            const reader = response.body?.getReader();
+            const decoder = new TextDecoder();
+
             const assistantMessage: Message = {
                 id: (Date.now() + 1).toString(),
                 role: "assistant",
-                content: `I'm currently being connected to the RAG motor to process the ${party.name} manifestos. Soon I'll be able to give you precise answers based on our documents!`
+                content: ""
             };
+
             setMessages(prev => [...prev, assistantMessage]);
             setIsTyping(false);
-        }, 1500);
+
+            if (reader) {
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    const chunk = decoder.decode(value, { stream: true });
+                    setMessages(prev => {
+                        const newMessages = [...prev];
+                        const lastMsg = newMessages[newMessages.length - 1];
+                        if (lastMsg && lastMsg.role === "assistant") {
+                            newMessages[newMessages.length - 1] = {
+                                ...lastMsg,
+                                content: lastMsg.content + chunk
+                            };
+                        }
+                        return newMessages;
+                    });
+                }
+            }
+        } catch (error) {
+            console.error("Chat Error:", error);
+            setIsTyping(false);
+            setMessages(prev => [...prev, {
+                id: Date.now().toString(),
+                role: "assistant",
+                content: "Sorry, I encountered an error. Please try again later."
+            }]);
+        }
     };
 
     return (
@@ -158,7 +205,15 @@ export default function ChatPage({ params }: { params: Promise<{ id: string }> }
                                         ? "bg-zinc-900 text-white rounded-tr-none"
                                         : "bg-zinc-950 border border-zinc-900 text-zinc-300 rounded-tl-none"
                                 )}>
-                                    {message.content}
+                                    {message.role === "assistant" ? (
+                                        <div className="prose prose-invert prose-sm max-w-none prose-p:leading-relaxed prose-pre:bg-zinc-900 prose-pre:border prose-pre:border-zinc-800">
+                                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                                {message.content}
+                                            </ReactMarkdown>
+                                        </div>
+                                    ) : (
+                                        message.content
+                                    )}
                                 </div>
                             </motion.div>
                         ))}

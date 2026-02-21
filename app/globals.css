@@ -11,6 +11,8 @@
   --font-sans: var(--font-poppins);
 }
 
+@plugin "@tailwindcss/typography";
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #000000;
