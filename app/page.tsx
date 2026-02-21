@@ -22,13 +22,13 @@ const parties = [
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen w-full flex flex-col items-center justify-center bg-black text-white overflow-hidden selection:bg-purple-500/30">
+    <main className="relative min-h-screen w-full flex flex-col items-center justify-center bg-black text-white overflow-hidden selection:bg-white/20">
       <div className="relative z-10 w-full max-w-4xl px-6 py-12 flex flex-col items-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8"
         >
           <h1 className="md:text-5xl text-3xl font-bold tracking-tight mb-4 bg-white to-zinc-400 bg-clip-text text-transparent">
             Manifesto GPT
@@ -36,6 +36,21 @@ export default function Home() {
           <p className="md:text-lg text-xs text-zinc-400 max-w-2xl mx-auto">
             Select a political party to start a dedicated chat about their manifesto, or use the comparison tool to see visions side-by-side.
           </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="mb-5 flex flex-col items-center gap-3 text-xs tracking-wide text-center"
+        >
+          <p className="text-zinc-600 font-medium">
+            Developed for a more informed democracy by <span className="font-bold text-white/60 underline"><Link href="https://subigyasubedi.com.np" className="hover:text-white transition-colors" target="_blank">subedi.js</Link></span>
+          </p>
+          {/* <div className="flex flex-col items-center gap-2">
+            <p className="text-zinc-700 font-medium">
+              This is an open-source project. We welcome your contributions on <Link href="https://github.com/subigya-js/manifesto-gpt" className="hover:text-white transition-colors text-white/85 underline font-semibold" target="_blank">GitHub</Link>
+            </p>
+          </div> */}
         </motion.div>
 
         {/* Party Selector Grid */}
@@ -108,21 +123,6 @@ export default function Home() {
         </motion.div>
 
         {/* Footer Info */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="mt-24 flex flex-col items-center gap-3 text-xs tracking-wide text-center"
-        >
-          <p className="text-zinc-600 font-medium">
-            Developed for a more informed democracy by <span className="font-bold text-white/60 underline"><Link href="https://subigyasubedi.com.np" className="hover:text-white transition-colors" target="_blank">subedi.js</Link></span>
-          </p>
-          {/* <div className="flex flex-col items-center gap-2">
-            <p className="text-zinc-700 font-medium">
-              This is an open-source project. We welcome your contributions on <Link href="https://github.com/subigya-js/manifesto-gpt" className="hover:text-white transition-colors text-white/85 underline font-semibold" target="_blank">GitHub</Link>
-            </p>
-          </div> */}
-        </motion.div>
       </div>
     </main>
   );
