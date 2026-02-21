@@ -4,8 +4,7 @@ import { clsx, type ClassValue } from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import {
     ArrowLeft,
-    Send,
-    User
+    Send
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -285,28 +284,36 @@ export default function ChatPage({ params }: { params: Promise<{ id: string }> }
             </main>
 
             {/* Input Area */}
-            <footer className="p-6 bg-black">
-                <div className="max-w-3xl mx-auto relative group">
-                    <div className="relative flex items-center gap-2 bg-zinc-950 border border-zinc-900 focus-within:border-zinc-700 rounded-2xl p-2 transition-all">
+            <footer className="p-3 sm:p-6 bg-black sticky bottom-0 z-50">
+                <div className="max-w-3xl mx-auto">
+                    <div className="relative">
+
                         <input
                             type="text"
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
-                            onKeyPress={(e) => e.key === "Enter" && handleSend()}
-                            placeholder={isCompare ? "Ask to compare policies..." : `Ask about ${party.name} manifesto...`}
-                            className="flex-1 bg-transparent border-none focus:ring-0 text-sm px-4 py-2 placeholder:text-zinc-600 outline-none"
+                            onKeyDown={(e) => e.key === "Enter" && handleSend()}
+                            placeholder={
+                                isCompare
+                                    ? "Compare policies..."
+                                    : `Ask about ${party.name}...`
+                            }
+                            className="w-full bg-zinc-950 border border-zinc-900 focus:border-zinc-700 rounded-2xl 
+                   text-sm sm:text-base px-4 py-3 pr-12 outline-none placeholder:text-zinc-600"
                         />
+
                         <button
                             onClick={handleSend}
-                            disabled={!input.trim()}
+                            disabled={!input.trim() || isTyping}
                             className={cn(
-                                "p-3 rounded-xl transition-all duration-300",
-                                input.trim()
-                                    ? "bg-white text-black hover:scale-105 active:scale-95 shadow-lg shadow-white/5"
-                                    : "bg-zinc-900 text-zinc-600"
+                                "absolute right-2 top-1/2 -translate-y-1/2",
+                                "w-9 h-9 flex items-center justify-center rounded-xl transition-all",
+                                (!input.trim() || isTyping)
+                                    ? "bg-zinc-900 text-zinc-600 cursor-not-allowed"
+                                    : "bg-white text-black active:scale-95"
                             )}
                         >
-                            <Send size={18} />
+                            <Send size={16} />
                         </button>
                     </div>
                 </div>
