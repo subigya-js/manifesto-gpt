@@ -30,10 +30,10 @@ export default function Home() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl font-bold tracking-tight mb-4 bg-white to-zinc-400 bg-clip-text text-transparent">
+          <h1 className="md:text-5xl text-3xl font-bold tracking-tight mb-4 bg-white to-zinc-400 bg-clip-text text-transparent">
             Manifesto GPT
           </h1>
-          <p className="text-zinc-400 text-md max-w-2xl mx-auto">
+          <p className="md:text-lg text-xs text-zinc-400 max-w-2xl mx-auto">
             Select a political party to start a dedicated chat about their manifesto, or use the comparison tool to see visions side-by-side.
           </p>
         </motion.div>
@@ -91,7 +91,7 @@ export default function Home() {
               "bg-white text-black hover:pr-12 hover:shadow-[0_20px_60px_-15px_rgba(255,255,255,0.4)] active:scale-95 cursor-pointer"
             )}
           >
-            <span className="relative z-10 font-[family-name:var(--font-poppins)] uppercase tracking-tight">Compare All Manifestos</span>
+            <span className="relative z-10 font-[family-name:var(--font-poppins)] uppercase tracking-tight text-sm">Compare All Manifestos</span>
             <ArrowRightLeft
               className={cn(
                 "w-5 h-5 transition-all duration-500 group-hover:translate-x-1"

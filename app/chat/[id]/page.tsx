@@ -5,7 +5,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
     ArrowLeft,
     Send,
-    Sparkles,
     User
 } from "lucide-react";
 import Image from "next/image";
@@ -24,7 +23,7 @@ const parties = {
     uml: { name: "CPN (UML)", image: "/images/uml.png", color: "red" },
     rsp: { name: "Rastriya Swatantra Party", image: "/images/rsp.png", color: "blue" },
     ssp: { name: "Shram Sanskriti Party", image: "/images/shram.png", color: "orange" },
-    compare: { name: "Manifesto Comparison", image: null, color: "zinc" }
+    compare: { name: "Manifesto Comparison", image: "/images/logo.png", color: "zinc" }
 };
 
 interface Message {
@@ -153,8 +152,14 @@ export default function ChatPage({ params }: { params: Promise<{ id: string }> }
                             </div>
                         )}
                         {isCompare && (
-                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
-                                <Sparkles size={20} className="text-white" />
+                            <div className="w-10 h-10 rounded-xl flex items-center justify-center">
+                                <Image
+                                    src="/images/logo.png"
+                                    alt="Manifesto Comparison"
+                                    width={32}
+                                    height={32}
+                                    className="object-contain"
+                                />
                             </div>
                         )}
                         <div>
@@ -187,13 +192,21 @@ export default function ChatPage({ params }: { params: Promise<{ id: string }> }
                                 <div className={cn(
                                     "w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-1 overflow-hidden",
                                     message.role === "assistant"
-                                        ? "bg-white text-zinc-400 p-1"
-                                        : "bg-white text-black"
+                                        ? isCompare
+                                            ? ""
+                                            : "bg-white text-zinc-400 p-1"
+                                        : "bg-white p-2"
                                 )}>
                                     {message.role === "assistant" ? (
                                         isCompare ? (
-                                            <div className="w-full h-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
-                                                <Sparkles size={14} className="text-white" />
+                                            <div className="w-full h-full flex items-center justify-center">
+                                                <Image
+                                                    src="/images/logo.png"
+                                                    alt="Manifesto Comparison"
+                                                    width={24}
+                                                    height={24}
+                                                    className="object-contain"
+                                                />
                                             </div>
                                         ) : (
                                             <Image
@@ -205,7 +218,13 @@ export default function ChatPage({ params }: { params: Promise<{ id: string }> }
                                             />
                                         )
                                     ) : (
-                                        <User size={18} />
+                                        <Image
+                                            src="/images/nepal.png"
+                                            alt="User"
+                                            width={24}
+                                            height={24}
+                                            className="object-contain"
+                                        />
                                     )}
                                 </div>
                                 <div className={cn(
@@ -230,10 +249,19 @@ export default function ChatPage({ params }: { params: Promise<{ id: string }> }
 
                     {isTyping && (
                         <div className="flex gap-4">
-                            <div className="w-8 h-8 rounded-lg bg-white p-1 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                            <div className={cn(
+                                "w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 overflow-hidden",
+                                isCompare ? "" : "bg-white p-1"
+                            )}>
                                 {isCompare ? (
-                                    <div className="w-full h-full bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center rounded-sm">
-                                        <Sparkles size={12} className="text-white" />
+                                    <div className="w-full h-full flex items-center justify-center rounded-sm">
+                                        <Image
+                                            src="/images/logo.png"
+                                            alt="Manifesto Comparison"
+                                            width={24}
+                                            height={24}
+                                            className="object-contain"
+                                        />
                                     </div>
                                 ) : (
                                     <Image
