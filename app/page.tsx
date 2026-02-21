@@ -32,7 +32,6 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen w-full flex flex-col items-center justify-center bg-black text-white overflow-hidden selection:bg-purple-500/30">
-
       <div className="relative z-10 w-full max-w-4xl px-6 py-12 flex flex-col items-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
