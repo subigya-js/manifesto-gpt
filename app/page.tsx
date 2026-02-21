@@ -122,10 +122,10 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.8 }}
-          className="mt-24 flex flex-col items-center gap-3 text-sm tracking-wide"
+          className="mt-24 flex flex-col items-center gap-3 text-xs tracking-wide text-center"
         >
           <p className="text-zinc-600 font-medium">
-            Developed by <span className="font-bold text-white/60 underline"><Link href="https://subigyasubedi.com.np" className="hover:text-white transition-colors" target="_blank">subedi.js</Link></span>
+            Developed for a more informed democracy by <span className="font-bold text-white/60 underline"><Link href="https://subigyasubedi.com.np" className="hover:text-white transition-colors" target="_blank">subedi.js</Link></span>
           </p>
           <div className="flex flex-col items-center gap-2">
             <p className="text-zinc-700 font-medium">
