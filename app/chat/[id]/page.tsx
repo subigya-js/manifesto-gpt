@@ -10,10 +10,10 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { use, useState } from "react";
-import { twMerge } from "tailwind-merge";
+import { use, useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { twMerge } from "tailwind-merge";
 
 function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
@@ -49,6 +49,15 @@ export default function ChatPage({ params }: { params: Promise<{ id: string }> }
         }
     ]);
     const [isTyping, setIsTyping] = useState(false);
+    const messagesEndRef = useRef<HTMLDivElement>(null);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages, isTyping]);
 
     const handleSend = async () => {
         if (!input.trim()) return;
@@ -243,6 +252,7 @@ export default function ChatPage({ params }: { params: Promise<{ id: string }> }
                             </div>
                         </div>
                     )}
+                    <div ref={messagesEndRef} />
                 </div>
             </main>
 
